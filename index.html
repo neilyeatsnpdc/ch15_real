@@ -15,63 +15,15 @@
 </head>
 
 <body>
-
   <div id="container"></div>
   <script type="text/babel">
 
-var destination = document.querySelector("#container");
-  var Colorizer = React.createClass({
-    getInitialState:function(){
-      return{
-        color:'gray',
-        bgColor:'gray'
-      }
-    },
-    colorValue:function(e){
-      this.setState({color:e.target.value});
-    },
-    setNewColor:function(e){
-      this.setState({bgColor:this.state.color});
-      this._input.value="";
-      this._input.focus();
-      e.preventDefault();
-    },
-    render:function () {
-      var squareStyle={
-        backgroundColor:this.state.bgColor,
-        height:100,
-        width:100,
-        margin:40,
-        borderRadius:10
-      };
 
+   ReactDOM.render(
+     <div>
 
-      return(
-        <div className="colorArea">
-        <div style={squareStyle} className="colorSquare"></div>
-      <form onSubmit={this.setNewColor}>
-      <input
-      ref={
-        el=> this._input=el
-        }
-      onChange={this.colorValue}
-      placeholder="enter a color">
-      </input>
-      <button type="submit">go</button>
-      </form>
-      </div>
-      );
-    }
-  });
-
-  ReactDOM.render(
-    <div id="blah">
-      <Colorizer/>
-    </div>,
-    destination
-  );
-
-
+     </div>
+    ,document.querySelector("#container") );
 
   </script>
 </body>
