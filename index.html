@@ -7,10 +7,42 @@
   <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <style type="text/css" media="screen">
-    body {
-      background-color: #FFCC00;
-      padding: 20px;
-      margin: 0;
+    body{
+      padding:50px;
+      background-color: #66CCFF;
+      font-family: sans-serif;
+    }
+    .toDoListMain .header input{
+      padding:10px;
+      font-size: 16px;
+      border: 2px solid #FFF;
+    }
+    .toDoListMain .header button{
+      padding:10px;
+      font-size:16px;
+      margin:10px;
+      background-color: #0066FF;
+      color:#FFF;
+      border:2px solid #0066FF;
+    }
+
+    .toDoListMain .header button:hover{
+      background-color: #00339;
+      border:2px solid #00339;
+      cursor:pointer;
+    }
+
+    .toDoListMain .theList{
+      list-style: none;
+      padding-left: :0;
+      width:255px
+    }
+    .toDoListMain .theList li{
+      color:#333;
+      background-color: rgba(255,255,255,.5);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
     }
 
     </style>
@@ -21,7 +53,58 @@
   <script type="text/babel">
 
 var destination = document.querySelector("#container");
+var ToDoItems=React.createClass({
+  render:function(){
+    var toDoEntries = this.props.entries;
 
+    function createTasks(item){
+      return <li key={item.key}>{item.text}</li>
+    }
+    var listItems=toDoEntries.map(createTasks);
+
+    return(
+      <ul className="theList">
+      {listItems}
+      </ul>
+    );
+  }
+});
+var ToDoList = React.createClass({
+  getInitialState:function(){
+    return{
+      items:[]
+    };
+  },
+  addItem:function(e){
+    var itemArray = this.state.items;
+    itemArray.push(
+      {
+        text:this._inputElement.value,
+        key: Date.now()
+      }
+    );
+
+this._inputElement.value="";
+
+    this.setState({
+      items:itemArray
+    });
+    e.preventDefault();
+  },
+  render:function(){
+    return(
+      <div className="toDoListMain">
+        <div className="header">
+          <form onSubmit={this.addItem}>
+            <input ref={(a)=> this._inputElement = a} placeholder="enter task"></input>
+            <button type="submit">Add</button>
+          </form>
+        </div>
+        <ToDoItems entries={this.state.items}/>
+      </div>
+    )
+  }
+});
 
 
 
@@ -29,7 +112,7 @@ var destination = document.querySelector("#container");
 
 ReactDOM.render(
 <div>
-hello
+<ToDoList/>
 </div>,
   destination
 );
